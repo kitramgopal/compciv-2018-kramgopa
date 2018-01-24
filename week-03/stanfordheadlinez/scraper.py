@@ -5,7 +5,6 @@ def print_hedz (url):
         hedtxt = extract_headline_text(t)
         print(hedtxt)
 
-
 def fetch_html(url):
     import requests 
     a = requests.get(url)
