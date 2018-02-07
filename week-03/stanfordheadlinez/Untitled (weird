@@ -1,0 +1,7 @@
+def fetch_html(url):
+    import requests 
+    a = requests.get(url)
+    txt= a.text  
+    return txt 
+
+    
