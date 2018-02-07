@@ -25,20 +25,20 @@ def foo_hello():
 ##################
 
 def foo_a():
-    """
-    Return the very first member of `ez_list`
-    """
+   return ez_list[0]
+
 
 
 def foo_b():
-    """
-    Return the sum of the 2nd and 4th members of
-      `ezlist`
-    """
+   a= ez_list[1]
+   b= ez_list[3]
+   c= a +b
+   return c
 
 
 
 def foo_c():
+    return ez_list[-1]
     """
     Return the very last member of `ez_list`.
 
@@ -47,6 +47,7 @@ def foo_c():
 
 
 def foo_cx():
+    return type(ez_list[-2])
     """
     Return the type of the object that is the
         second-to-last member of `ez_list`
@@ -54,6 +55,8 @@ def foo_cx():
 
 
 def foo_d():
+    sequence = ez_list[-2]
+    return sequence[-1]
     """
     Return the very last member of the sequence that itself
         is the second-to-last member of `ez_list`
@@ -61,6 +64,7 @@ def foo_d():
 
 
 def foo_e():
+    return len(ez_list)
     """
     Calculate and return the length of `ez_list`,  i.e., the
       number of members it contains.
@@ -68,6 +72,10 @@ def foo_e():
 
 
 def foo_f():
+    sixth_member = ez_list[5]
+    semicolon_string=';'.join(sixth_member)
+    return semicolon_string
+
     """
     Return the 6th member of `ez_list` as a single,
       semi-colon delimited string
@@ -78,6 +86,10 @@ def foo_f():
 
 
 def foo_g():
+    list1 = []
+    for i in range(1,5):
+        list1.append(ez_list[i])
+    return list1
     """
     Return a list that contains the 2nd through 5th
       elements of `ez_list`
@@ -87,6 +99,10 @@ def foo_g():
 
 
 def foo_h():
+    list2 = []
+    for i in range(1,4):
+        list2.append(ez_list[-i])
+    return list2
     """
     Return a list that consists of the last
       3 members of `ez_list` in *reverse* order
