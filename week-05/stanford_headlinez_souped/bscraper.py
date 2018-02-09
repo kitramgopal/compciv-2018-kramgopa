@@ -27,7 +27,8 @@ def fetch_hedz(url=OFFICIAL_URL):
     # headlines is an empty list for appending things
     # return it at the end
     headlines = []
-
+    for t in tags:
+        headlines.append(extract_headline_data(t))
     ###
     # You do the rest!
     #
@@ -40,6 +41,10 @@ def fetch_hedz(url=OFFICIAL_URL):
 
 
 def extract_headline_data(tag):
+    d = {}
+    d['title'] = tag.text
+    d['url'] = tag.attrs['href']
+    return d
     """
     Extracts data of the headline from a
         BeautifulSoup Tag object and repackages it
@@ -67,6 +72,10 @@ def extract_headline_data(tag):
 
 
 def fetch_html(url):
+    a = requests.get(url)
+    txt = a.text
+    return (txt)
+    
     """
     This function performs a GET request on the given
       URL and returns the content (typically, HTML)
@@ -82,6 +91,9 @@ def fetch_html(url):
 
 
 def parse_headline_tags(txt):
+    soup = BeautifulSoup(txt, 'lxml')
+    tags = soup.select('h3 a')
+    return(tags)
     """
     Extracts the news headlines from the HTML on the
       Stanford.edu News homepage. Uses the BeautifulSoup
