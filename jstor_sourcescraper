@@ -1,0 +1,42 @@
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urljoin
+
+URL_BASE = 'https://searchworks.stanford.edu/catalog?utf8=%E2%9C%93&search_field=search&q='
+searchList = ['biology', 'cell']
+
+####
+
+def getsources():
+    url = makeUrl()
+    text = gethtml(url)
+    headlineList = getnames(text)
+
+def makeUrl (): #can i make endless list parameters? e.g. you can manually input makeUrl('china', 'economy', etc) to whatever length?
+    finalURL = 'https://searchworks.stanford.edu/catalog?utf8=%E2%9C%93&search_field=search&q='
+    for i in searchList:
+        finalURL = finalURL + i
+        if i != searchList[-1]:
+            finalURL = finalURL + '+'
+    return finalURL        
+
+def gethtml(url):
+    resp=requests.get(url)
+    text= resp.text
+    return text
+
+def getnames(text):
+    soup = BeautifulSoup(text, 'lxml')
+    resultSet = soup.find_all('h3')
+    plist = []
+    for i in resultSet:
+        if i['class'] == ['index_title', 'col-sm-9', 'col-lg-10']:
+            thing = str.strip(i.text)
+            thing = thing.replace('\n    \n', '')
+            thing = thing.replace('\n', '')
+            plist.append(thing)
+    print(plist)
+    return plist
+
+
+
