@@ -1,0 +1,43 @@
+from bs4 import BeautifulSoup
+import scraper
+import sorter
+
+#find average yearly increase in asset prices
+sen_dict_list = sorter.make_url_list() #a list of dictionaries. one dictionary per senator
+#keys = 'name' and 'url/date list,' a list of report data comprised of url-date pairings in dict form 
+
+def run_project ():
+    for sen_dict in sen_dict_list:
+        make_asset_list()
+
+def make_asset_dict(sen_dict): #this sums the worth of a senators assets for each annual report
+    for report in sen_dict['url/date list']: #a list of urls with corresponding dates
+        asset_date_dict = {} #makes a new dictionary for each report
+        asset_date_dict['date']= report['date']
+        html = fetch_report_from_web(report['url']) #gets html text from online
+        report_asset_sum = sum_assets(html)
+        asset_date_dict['asset_sum'] = sum_assets(html)
+        del sen_dict['url/date list']
+        sen_dict['asset/date'] = asset_date_dict
+    return sen_dict #returns a dictionary with a key holding a list of asset sum-date pairings for every report
+     
+def sum_assets (html):
+    soup = BeautifulSoup(html, 'lxml')
+    records = soup.select['tr'] #this isn't working because im not getting the right html
+    #sum assets-- wait to figure outt html problem before solving this
+
+def fetch_report_from_web(url_seg): #The problem method
+    DATA_SRC_URL = 'https://efdsearch.senate.gov' + url_seg
+    payload = {
+        'id':"agree_statement",
+        'value':"1",
+        'name':"prohibition_agreement",
+        'type':"checkbox"
+    }
+    resp = requests.post(DATA_SRC_URL, data =payload)
+    txt = resp.text
+    if resp.status_code != 200:
+        errmsg = 'Did not get an OK status when requesting: ' + DATA_SRC_URL
+        raise RuntimeError(errmsg)
+    else:
+        return txt
